@@ -162,11 +162,41 @@
   "professional_observation_note": "The learning notes in this dashboard are Mr. Guevara's professional observations based on lessons. They are not fixed labels, diagnoses, grades, or formal assessment results.",
   "stats": {
     "sessions_logged": 5,
-    "distinct_skills_tried": 49,
+    "distinct_skills_tried": 3,
     "milestones_hit": 3
   },
   "skill_threads": {
-    "Science Content Knowledge": [
+    "Initiative and self-direction": [
+      {
+        "session_date_iso": "2026-09-07",
+        "session_date": "07 September 2026",
+        "lesson_title": "Life Processes and Organs",
+        "stage": "Growing",
+        "evidence": "Amelie applied new vocabulary almost immediately, correctly using 'sensitivity' in a simulation only minutes after the term was introduced."
+      },
+      {
+        "session_date_iso": "2026-09-11",
+        "session_date": "11 September 2026",
+        "lesson_title": "Tissues Organs And Fever",
+        "stage": "Growing",
+        "evidence": "Amelie worked out on her own, after initially resisting, that blood meets the technical definition of a tissue."
+      },
+      {
+        "session_date_iso": "2026-09-18",
+        "session_date": "18 September 2026",
+        "lesson_title": "Cells Organelles Organ Systems",
+        "stage": "Growing",
+        "evidence": "Amelie described the concept of an organelle in her own words, mentioning structures that \"pump protein\" and the green structure that does photosynthesis, before I gave her the correct terminology, and then correctly reasoned that human cells would not contain chloroplasts."
+      },
+      {
+        "session_date_iso": "2026-09-21",
+        "session_date": "21 September 2026",
+        "lesson_title": "Solutions Mixtures Chemistry",
+        "stage": "Growing",
+        "evidence": "Amelie discovered independently through a simulation that salt solutions conduct electricity while sugar solutions do not, and correctly predicted, unprompted, that evaporating a salt solution increases its concentration."
+      }
+    ],
+    "Critical thinking": [
       {
         "session_date_iso": "2026-09-07",
         "session_date": "07 September 2026",
@@ -182,20 +212,6 @@
         "evidence": "Amelie worked out for herself why blood counts as connective tissue after initially rejecting the idea, showing a genuine shift in her thinking within the lesson."
       },
       {
-        "session_date_iso": "2026-09-11",
-        "session_date": "11 September 2026",
-        "lesson_title": "Tissues Organs And Fever",
-        "stage": "Growing",
-        "evidence": "Amelie worked out on her own, after initially resisting, that blood meets the technical definition of a tissue."
-      },
-      {
-        "session_date_iso": "2026-09-18",
-        "session_date": "18 September 2026",
-        "lesson_title": "Cells Organelles Organ Systems",
-        "stage": "Growing",
-        "evidence": "Amelie recalled all eight characteristics of living organisms largely unprompted and in a clear order, then independently navigated two interactive cell simulations, correctly identifying several structures."
-      },
-      {
         "session_date_iso": "2026-09-21",
         "session_date": "21 September 2026",
         "lesson_title": "Solutions Mixtures Chemistry",
@@ -203,41 +219,13 @@
         "evidence": "Amelie reasoned through the salt-and-sand separation method before being shown it, and extended her thinking beyond the task during the conductivity simulation."
       }
     ],
-    "Science Independent Reasoning": [
-      {
-        "session_date_iso": "2026-09-07",
-        "session_date": "07 September 2026",
-        "lesson_title": "Life Processes and Organs",
-        "stage": "Growing",
-        "evidence": "Amelie applied new vocabulary almost immediately, correctly using 'sensitivity' in a simulation only minutes after the term was introduced."
-      },
-      {
-        "session_date_iso": "2026-09-11",
-        "session_date": "11 September 2026",
-        "lesson_title": "Tissues Organs and Systems",
-        "stage": "Growing",
-        "evidence": "Amelie initially resisted classifying blood as a tissue since it is a liquid, then reasoned her own way to the correct connective-tissue explanation once prompted."
-      },
-      {
-        "session_date_iso": "2026-09-11",
-        "session_date": "11 September 2026",
-        "lesson_title": "Tissues Organs And Fever",
-        "stage": "Growing",
-        "evidence": "Amelie reasons most confidently when given a concrete image or example to work from, such as the skin diagram she found herself, or a surprising fact like blood being a tissue."
-      },
+    "Productivity and leadership": [
       {
         "session_date_iso": "2026-09-18",
         "session_date": "18 September 2026",
         "lesson_title": "Cells Organelles Organ Systems",
         "stage": "Growing",
-        "evidence": "Amelie described the concept of an organelle in her own words, mentioning structures that \"pump protein\" and the green structure that does photosynthesis, before I gave her the correct terminology, and then correctly reasoned that human cells would not contain chloroplasts."
-      },
-      {
-        "session_date_iso": "2026-09-21",
-        "session_date": "21 September 2026",
-        "lesson_title": "Solutions Mixtures Chemistry",
-        "stage": "Growing",
-        "evidence": "Amelie discovered independently through a simulation that salt solutions conduct electricity while sugar solutions do not, and correctly predicted, unprompted, that evaporating a salt solution increases its concentration."
+        "evidence": "Amelie recalled all eight characteristics of living organisms largely unprompted and in a clear order, then independently navigated two interactive cell simulations, correctly identifying several structures."
       }
     ]
   },
@@ -1539,8 +1527,7 @@
       }
     }
   ]
-}
-</script>
+}</script>
 <script>
 const DISCLAIMER = "This is a voluntary teaching resource created by Mr. Guevara to add as much value as possible for families and students. It is not a requirement of Crimson Global Academy, and other teachers may not provide anything similar — this is not part of what CGA officially offers. Please refer to the Learning Lab as the official Crimson Global Academy resource, where assignments, grades, deadlines, and formal progress reports are provided. The information here is supplementary and is not part of any official session report or progress report sent by the school.";
 
@@ -1589,10 +1576,18 @@ function joinProse(arr){
 
 /* Renders any field that might be a plain string, a real array, or the
    Python-repr-list-as-string bug as clean prose text (HTML-escaped). */
+/* Capitalizes the first letter of a joined/flowing sentence without
+   touching the rest of the string (so mid-sentence proper nouns etc. are
+   left alone). Safe to call on an already-capitalized or empty string. */
+function capitalizeFirst(s){
+  if (!s) return s;
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 function proseField(v){
   const asArray = toArrayOfStrings(v);
-  if (asArray !== null) return esc(joinProse(asArray));
-  return esc(v || "");
+  if (asArray !== null) return capitalizeFirst(esc(joinProse(asArray)));
+  return capitalizeFirst(esc(v || ""));
 }
 
 function footerHtml(){
@@ -1789,8 +1784,7 @@ function renderProgress(){
         </div>`).join("")}
     </div>
     <div class="card">
-      <h3>Early learning profile</h3>
-      <div class="basis-note">Based on ${lp.based_on_sessions ?? 0} sessions so far — this will keep evolving as more sessions are logged.</div>
+      <h3>Learning profile</h3>
       <div class="profile-grid" style="margin-top:10px;">
         ${[
           ["Engages best when", lp.engages_best_when],
